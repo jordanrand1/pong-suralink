@@ -7,7 +7,9 @@ class GameCanvas extends Component {
     playing: false,
     gameBallColor: "white",
     ballVelocity: 1,
-    deadBalls: []
+    deadBalls: [],
+    p1Color: "white",
+    p2Color: "white"
   };
 
   _initializeGameCanvas = () => {
@@ -217,15 +219,24 @@ class GameCanvas extends Component {
     };
   })();
 
-  startGame = (points, ballColor, ballVelocity) => {
-    console.log(points, ballColor, ballVelocity);
+  startGame = options => {
+    console.log(options);
+    const {
+      gameBallColor,
+      ballVelocity,
+      pointsToWin,
+      p1Color,
+      p2Color
+    } = options;
     if (this.state.playing === false) {
       this.setState(
         {
-          gameBallColor: ballColor,
+          gameBallColor,
           playing: true,
           ballVelocity: Number(ballVelocity),
-          pointsToWin: Number(points)
+          pointsToWin: Number(pointsToWin),
+          p1Color,
+          p2Color
         },
         () => {
           this._initializeGameCanvas();
