@@ -16,25 +16,16 @@ class GameControls extends React.Component {
     });
   };
 
-  colorPicker = name => {
+  input = (name, value, placeholder, type) => {
     return (
-      <select name={name} onChange={this.handleChange}>
-        <option value="white" style={{ backgoundColor: "white" }}>
-          White
-        </option>
-        <option value="blue" style={{ backgoundColor: "blue" }}>
-          Blue
-        </option>
-        <option value="green" style={{ backgoundColor: "green" }}>
-          Green
-        </option>
-        <option value="red" style={{ backgoundColor: "red" }}>
-          Red
-        </option>
-        <option value="purple" style={{ backgoundColor: "purple" }}>
-          Purple
-        </option>
-      </select>
+      <input
+        name={name}
+        value={value}
+        onChange={this.handleChange}
+        placeholder={placeholder}
+        type={type}
+        style={{ display: "block" }}
+      />
     );
   };
 
@@ -47,17 +38,28 @@ class GameControls extends React.Component {
         >
           Start
         </button>
-        p1: {this.colorPicker("p1Color")} p2: {this.colorPicker("p2Color")}
-        <br />
+        p1:{" "}
+        {this.input(
+          "p1Color",
+          this.state.p1Color,
+          "Player 1 color (hex)",
+          "text"
+        )}
+        p2:{" "}
+        {this.input(
+          "p2Color",
+          this.state.p2Color,
+          "Player 2 color (hex)",
+          "text"
+        )}
         Points to win
-        <input
-          name="pointsToWin"
-          value={this.state.pointsToWin}
-          onChange={this.handleChange}
-          placeholder="Points to win"
-          type="number"
-          style={{ display: "block" }}
-        />
+        {this.input(
+          "pointsToWin",
+          this.state.pointsToWin,
+          "Points to win:",
+          "number"
+        )}
+        Ball Velocity:
         <input
           name="ballVelocity"
           value={this.state.ballVelocity}
@@ -68,7 +70,13 @@ class GameControls extends React.Component {
           min="1"
           max="3"
         />
-        Ball Color:{this.colorPicker("gameBallColor")}
+        Ball Color:{" "}
+        {this.input(
+          "gameBallColor",
+          this.state.gameBallColor,
+          "Ball color (hex)",
+          "text"
+        )}
       </div>
     );
   }

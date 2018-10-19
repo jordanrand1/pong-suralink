@@ -35,7 +35,7 @@ class GameCanvas extends Component {
       y: 200,
       width: 15,
       height: 80,
-      color: "#FFF",
+      color: `${this.state.p1Color}`,
       velocityY: 2
     });
     this.player2 = new this.GameClasses.Box({
@@ -43,7 +43,7 @@ class GameCanvas extends Component {
       y: 200,
       width: 15,
       height: 80,
-      color: "#FFF",
+      color: `${this.state.p2Color}`,
       velocityY: 2
     });
     this.boardDivider = new this.GameClasses.Box({
@@ -241,7 +241,6 @@ class GameCanvas extends Component {
         () => {
           this._initializeGameCanvas();
           this._renderLoop();
-          console.log(this.gameBall.velocityX);
         }
       );
     }
