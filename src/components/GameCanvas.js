@@ -9,7 +9,8 @@ class GameCanvas extends Component {
     ballVelocity: 1,
     deadBalls: [],
     p1Color: "white",
-    p2Color: "white"
+    p2Color: "white",
+    api: {}
   };
 
   _initializeGameCanvas = () => {
@@ -219,6 +220,21 @@ class GameCanvas extends Component {
     };
   })();
 
+  apiCall = () => {
+    fetch("https://wwwforms.suralink.com/pong.php?accessToken=pingPONG").then(
+      res =>
+        this.setState(
+          {
+            api: res
+          },
+          () => {
+            console.log(this.state.api);
+          }
+        )
+    );
+    console.log(this.state.api);
+  };
+
   startGame = options => {
     console.log(options);
     const {
@@ -241,6 +257,7 @@ class GameCanvas extends Component {
         () => {
           this._initializeGameCanvas();
           this._renderLoop();
+          this.apiCall();
         }
       );
     }
