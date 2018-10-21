@@ -8,7 +8,7 @@ class GameInterface extends Component {
       <main
         style={{
           width: "100vw",
-          height: "120vh",
+          height: "200vh",
           background: "#000",
           display: "flex",
           justifyContent: "center",
