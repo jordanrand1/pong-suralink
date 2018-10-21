@@ -30,22 +30,45 @@ class GameCanvas extends Component {
     });
     window.addEventListener("keyup", e => delete this.keys[e.keyCode]);
 
+    //faking the data from api, would destructure with this.state.api.data.gameData
+    const paddle1 = {
+      width: 10,
+      height: 80,
+      color: "#000",
+      velocityY: 5
+    };
+
+    const paddle2 = {
+      width: 10,
+      height: 80,
+      color: "#000",
+      velocityY: 5
+    };
+
+    const ball = {
+      width: 10,
+      height: 10,
+      color: "#000",
+      velocityX: 2,
+      velocityY: 2
+    };
+
     // instantiate our game elements
     this.player1 = new this.GameClasses.Box({
       x: 10,
       y: 200,
-      width: 15,
-      height: 80,
-      color: `${this.state.p1Color}`,
-      velocityY: 2
+      width: paddle1.width || 15,
+      height: paddle1.height || 80,
+      color: paddle1.color || this.state.p1Color,
+      velocityY: paddle1.velocityY || 2
     });
     this.player2 = new this.GameClasses.Box({
       x: 725,
       y: 200,
-      width: 15,
-      height: 80,
-      color: `${this.state.p2Color}`,
-      velocityY: 2
+      width: paddle2.width || 15,
+      height: paddle2.height || 80,
+      color: paddle2.color || this.state.p1Color,
+      velocityY: paddle2.velocityY || 2
     });
     this.boardDivider = new this.GameClasses.Box({
       x: this.canvas.width / 2 - 2.5,
@@ -57,11 +80,11 @@ class GameCanvas extends Component {
     this.gameBall = new this.GameClasses.Box({
       x: this.canvas.width / 2,
       y: this.canvas.height / 2,
-      width: 15,
-      height: 15,
-      color: `${this.state.gameBallColor}`,
-      velocityX: -this.state.ballVelocity,
-      velocityY: this.state.ballVelocity
+      width: ball.width || 15,
+      height: ball.height || 15,
+      color: ball.color || this.state.gameBallColor,
+      velocityX: ball.velocityX || -this.state.ballVelocity,
+      velocityY: ball.velocityY || this.state.ballVelocity
     });
   };
 
@@ -220,19 +243,24 @@ class GameCanvas extends Component {
     };
   })();
 
+  //response does not have the game data
   apiCall = () => {
     fetch("https://wwwforms.suralink.com/pong.php?accessToken=pingPONG").then(
-      res =>
+      res => {
         this.setState(
           {
             api: res
           },
           () => {
-            console.log(this.state.api);
+            // I would set delay to the newDelay which would be in state, for now it defaults to 6s
+            let delay = this.state.api.data || 6000;
+            console.log("api call");
+            setTimeout(this.apiCall, delay);
           }
-        )
+        );
+      }
     );
-    console.log(this.state.api);
+    console.log("Called before Fetch");
   };
 
   startGame = options => {
@@ -267,11 +295,11 @@ class GameCanvas extends Component {
     if (this.p1Score === this.state.pointsToWin) {
       console.log("P1 WINNER");
       //not ideal, I wasn't suer how to close the renderloop. I tried cancelAnimation
-      location.reload();
+      this.location.reload();
     } else if (this.p2Score === this.state.pointsToWin) {
       console.log("P2 WINNER");
       //not ideal but works
-      location.reload();
+      this.location.reload();
     }
   };
 
