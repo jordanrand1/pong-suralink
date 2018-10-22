@@ -295,11 +295,11 @@ class GameCanvas extends Component {
     if (this.p1Score === this.state.pointsToWin) {
       console.log("P1 WINNER");
       //not ideal, I wasn't suer how to close the renderloop. I tried cancelAnimation
-      this.location.reload();
+      location.reload();
     } else if (this.p2Score === this.state.pointsToWin) {
       console.log("P2 WINNER");
       //not ideal but works
-      this.location.reload();
+      location.reload();
     }
   };
 
